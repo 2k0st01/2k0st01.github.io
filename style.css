@@ -59,7 +59,7 @@ body {
 
 .modal {
     display: none;
-    position: fixed;
+    position: center;
     z-index: 1;
     padding-top: 60px;
     left: 0;
