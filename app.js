@@ -122,13 +122,9 @@ function updateMainButton() {
 }
 
 tg.MainButton.onClick(function() {
-    if (tg.MainButton.textContent === 'Next') {
-        // Show the date and time selection modal
-        document.getElementById('dateTimeModal').style.display = 'block';
-        tg.MainButton.setText('Submit Order');
-    } else if (tg.MainButton.textContent === 'Submit Order') {
-        submitOrder();
-    }
+    // Show the date and time selection modal
+    document.getElementById('dateTimeModal').style.display = 'block';
+    tg.MainButton.setText('Submit Order');
 });
 
 // Close the modal when the user clicks on <span> (x)
@@ -145,7 +141,7 @@ window.onclick = function(event) {
     }
 };
 
-function submitOrder() {
+document.getElementById('submitOrderBtn').addEventListener('click', function() {
     const orderDate = document.getElementById('orderDate').value;
     const orderTime = document.getElementById('orderTime').value;
     if (!orderDate || !orderTime) {
@@ -155,4 +151,49 @@ function submitOrder() {
 
     const now = new Date();
     const selectedDateTime = new Date(`${orderDate}T${orderTime}:00`);
-   
+    if (selectedDateTime < now) {
+        alert('Please select a future date and time.');
+        return;
+    }
+
+    const localDateTime = `${orderDate}T${orderTime}:00`;
+    const order = {
+        chatId: tg.initDataUnsafe.user.id,
+        productsId: Array.from(cart.entries()).map(([productId, quantity]) => {
+            let obj = {};
+            obj[productId] = quantity;
+            return obj;
+        }),
+        localDateTime: localDateTime
+    };
+
+    fetch('http://localhost:8080/api/addOrder', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(order)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Order submitted:', data);
+        cart.clear();
+        updateMainButton();
+        loadProducts();
+        document.getElementById('dateTimeModal').style.display = 'none';
+        tg.MainButton.setText('Next');
+    })
+    .catch(error => console.error('Error submitting order:', error));
+});
+
+document.addEventListener('DOMContentLoaded', loadProducts);
+
+let usercard = document.getElementById('usercard');
+let p = document.createElement('p');
+p.innerText = `${tg.initDataUnsafe.user.first_name} ${tg.initDataUnsafe.user.last_name}`;
+usercard.appendChild(p);
