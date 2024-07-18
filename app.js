@@ -122,30 +122,14 @@ function updateMainButton() {
 }
 
 tg.MainButton.onClick(function() {
-    if (tg.MainButton.textContent === 'Next') {
-        // Show the date and time selection modal
-        document.getElementById('dateTimeModal').style.display = 'block';
-        tg.MainButton.setText('Submit Order');
-    } else if (tg.MainButton.textContent === 'Submit Order') {
-        submitOrder();
-    }
+    // Show the date and time selection modal
+    document.getElementById('dateTimeModal').style.display = 'block';
+    tg.MainButton.setText('Submit Order');
 });
 
-// Close the date and time modal when the user clicks on <span> (x)
+// Close the modal when the user clicks on <span> (x)
 document.querySelector('.close').onclick = function() {
     document.getElementById('dateTimeModal').style.display = 'none';
-    tg.MainButton.setText('Next');
-};
-
-// Close the confirmation modal when the user clicks on <span> (x)
-document.querySelector('.close-confirmation').onclick = function() {
-    document.getElementById('confirmationModal').style.display = 'none';
-    tg.MainButton.setText('Next');
-};
-
-// Close the confirmation modal when the user clicks the close button
-document.getElementById('closeConfirmationBtn').onclick = function() {
-    document.getElementById('confirmationModal').style.display = 'none';
     tg.MainButton.setText('Next');
 };
 
@@ -157,11 +141,7 @@ window.onclick = function(event) {
     }
 };
 
-document.getElementById('confirmOrderBtn').onclick = function() {
-    submitOrder();
-};
-
-function submitOrder() {
+document.getElementById('submitOrderBtn').addEventListener('click', function() {
     const orderDate = document.getElementById('orderDate').value;
     const orderTime = document.getElementById('orderTime').value;
     if (!orderDate || !orderTime) {
@@ -206,19 +186,14 @@ function submitOrder() {
         updateMainButton();
         loadProducts();
         document.getElementById('dateTimeModal').style.display = 'none';
-        document.getElementById('confirmationModal').style.display = 'block';
+        tg.MainButton.setText('Next');
     })
-    .catch(error => {
-        console.error('Error submitting order:', error);
-        alert('There was an error submitting your order. Please try again.');
-    });
-}
+    .catch(error => console.error('Error submitting order:', error));
+});
 
 document.addEventListener('DOMContentLoaded', loadProducts);
 
 let usercard = document.getElementById('usercard');
-if (usercard) {
-    let p = document.createElement('p');
-    p.innerText = `${tg.initDataUnsafe.user.first_name} ${tg.initDataUnsafe.user.last_name}`;
-    usercard.appendChild(p);
-}
+let p = document.createElement('p');
+p.innerText = `${tg.initDataUnsafe.user.first_name} ${tg.initDataUnsafe.user.last_name}`;
+usercard.appendChild(p);
