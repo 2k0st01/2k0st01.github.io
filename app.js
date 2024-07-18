@@ -174,12 +174,12 @@ document.getElementById('submitOrderBtn').addEventListener('click', function() {
         },
         body: JSON.stringify(order)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    // .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    // })
     .then(data => {
         console.log('Order submitted:', data);
         cart.clear();
@@ -188,11 +188,11 @@ document.getElementById('submitOrderBtn').addEventListener('click', function() {
         document.getElementById('dateTimeModal').style.display = 'none';
         tg.MainButton.setText('Next');
         showMessage('Order submitted successfully!', 'success');
-    })
-    .catch(error => {
-        console.error('Error submitting order:', error);
-        showMessage('Error submitting order. Please try again.', 'error');
     });
+    // .catch(error => {
+    //     console.error('Error submitting order:', error);
+    //     showMessage('Error submitting order. Please try again.', 'error');
+    // });
 });
 
 function showMessage(message, type) {
