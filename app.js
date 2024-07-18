@@ -8,7 +8,7 @@ let products = [];
 let cart = new Map();
 
 function loadProducts() {
-    fetch('http://localhost:8080/api/products')  // Заміни 'http://localhost:8080/api/products' на справжній URL сервера
+    fetch('http://localhost:8080/api/products') 
         .then(response => response.json())
         .then(data => {
             products = data;
