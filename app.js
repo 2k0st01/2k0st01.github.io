@@ -113,18 +113,15 @@ function updateDisplay(productId) {
 }
 
 function updateMainButton() {
-    const submitOrderBtn = document.getElementById('submitOrderBtn');
     if (cart.size > 0) {
-        submitOrderBtn.style.display = 'block';
         tg.MainButton.setText('Submit Order');
         tg.MainButton.show();
     } else {
-        submitOrderBtn.style.display = 'none';
         tg.MainButton.hide();
     }
 }
 
-document.getElementById('submitOrderBtn').addEventListener('click', function() {
+tg.MainButton.onClick(function() {
     const order = {
         chatId: tg.initDataUnsafe.user.id,
         productsId: Array.from(cart.entries()).map(([productId, quantity]) => {
@@ -156,8 +153,6 @@ document.getElementById('submitOrderBtn').addEventListener('click', function() {
     })
     .catch(error => console.error('Error submitting order:', error));
 });
-
-
 
 document.addEventListener('DOMContentLoaded', loadProducts);
 
