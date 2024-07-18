@@ -124,7 +124,7 @@ function updateMainButton() {
     }
 }
 
-document.getElementById('usercard').addEventListener('click', function() {
+document.getElementById('submitOrderBtn').addEventListener('click', function() {
     const order = {
         chatId: tg.initDataUnsafe.user.id,
         productsId: Array.from(cart.entries()).map(([productId, quantity]) => {
