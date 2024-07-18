@@ -122,26 +122,52 @@ function updateMainButton() {
 }
 
 tg.MainButton.onClick(function() {
-    // Show the date and time selection modal
-    document.getElementById('dateTimeModal').style.display = 'block';
-    tg.MainButton.setText('Submit Order');
+    if (tg.MainButton.textContent === 'Next') {
+        // Show the date and time selection modal
+        document.getElementById('dateTimeModal').style.display = 'block';
+        tg.MainButton.setText('Submit Order');
+    } else if (tg.MainButton.textContent === 'Submit Order') {
+        submitOrder();
+    }
 });
 
-// Close the modal when the user clicks on <span> (x)
-document.querySelector('.close').onclick = function() {
-    document.getElementById('dateTimeModal').style.display = 'none';
-    tg.MainButton.setText('Next');
-};
+// Close the date and time modal when the user clicks on <span> (x)
+const closeButton = document.querySelector('.close');
+if (closeButton) {
+    closeButton.onclick = function() {
+        document.getElementById('dateTimeModal').style.display = 'none';
+        tg.MainButton.setText('Next');
+    };
+}
+
+// Close the confirmation modal when the user clicks on <span> (x)
+const closeConfirmationButton = document.querySelector('.close-confirmation');
+if (closeConfirmationButton) {
+    closeConfirmationButton.onclick = function() {
+        document.getElementById('confirmationModal').style.display = 'none';
+        tg.MainButton.setText('Next');
+    };
+}
+
+// Close the confirmation modal when the user clicks the close button
+const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
+if (closeConfirmationBtn) {
+    closeConfirmationBtn.onclick = function() {
+        document.getElementById('confirmationModal').style.display = 'none';
+        tg.MainButton.setText('Next');
+    };
+}
 
 // Close the modal when the user clicks anywhere outside of the modal
 window.onclick = function(event) {
-    if (event.target == document.getElementById('dateTimeModal')) {
-        document.getElementById('dateTimeModal').style.display = 'none';
+    const dateTimeModal = document.getElementById('dateTimeModal');
+    if (event.target == dateTimeModal) {
+        dateTimeModal.style.display = 'none';
         tg.MainButton.setText('Next');
     }
 };
 
-document.getElementById('submitOrderBtn').addEventListener('click', function() {
+function submitOrder() {
     const orderDate = document.getElementById('orderDate').value;
     const orderTime = document.getElementById('orderTime').value;
     if (!orderDate || !orderTime) {
@@ -186,14 +212,19 @@ document.getElementById('submitOrderBtn').addEventListener('click', function() {
         updateMainButton();
         loadProducts();
         document.getElementById('dateTimeModal').style.display = 'none';
-        tg.MainButton.setText('Next');
+        document.getElementById('confirmationModal').style.display = 'block';
     })
-    .catch(error => console.error('Error submitting order:', error));
-});
+    .catch(error => {
+        console.error('Error submitting order:', error);
+        alert('There was an error submitting your order. Please try again.');
+    });
+}
 
 document.addEventListener('DOMContentLoaded', loadProducts);
 
-let usercard = document.getElementById('usercard');
-let p = document.createElement('p');
-p.innerText = `${tg.initDataUnsafe.user.first_name} ${tg.initDataUnsafe.user.last_name}`;
-usercard.appendChild(p);
+const usercard = document.getElementById('usercard');
+if (usercard) {
+    const p = document.createElement('p');
+    p.innerText = `${tg.initDataUnsafe.user.first_name} ${tg.initDataUnsafe.user.last_name}`;
+    usercard.appendChild(p);
+}
