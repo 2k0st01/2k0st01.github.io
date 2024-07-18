@@ -10,6 +10,19 @@
     <div class="container" id="productContainer"></div>
     <div class="usercard" id="usercard"></div>
 
+    <!-- Modal for date and time selection -->
+    <div id="dateTimeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Select Date and Time</h2>
+            <label for="orderDate">Date:</label>
+            <input type="date" id="orderDate" name="orderDate">
+            <label for="orderTime">Time:</label>
+            <input type="time" id="orderTime" name="orderTime">
+            <button id="confirmOrderBtn" class="btn">Confirm Order</button>
+        </div>
+    </div>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="app.js"></script>
 </body>
