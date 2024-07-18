@@ -8,7 +8,7 @@ let products = [];
 let cart = new Map();
 
 function loadProducts() {
-    fetch('http://localhost:8080/api/products') 
+    fetch('/api/products') 
         .then(response => response.json())
         .then(data => {
             products = data;
@@ -122,6 +122,31 @@ function updateMainButton() {
 }
 
 tg.MainButton.onClick(function() {
+    // Show the date and time selection modal
+    document.getElementById('dateTimeModal').style.display = 'block';
+});
+
+// Close the modal when the user clicks on <span> (x)
+document.querySelector('.close').onclick = function() {
+    document.getElementById('dateTimeModal').style.display = 'none';
+};
+
+// Close the modal when the user clicks anywhere outside of the modal
+window.onclick = function(event) {
+    if (event.target == document.getElementById('dateTimeModal')) {
+        document.getElementById('dateTimeModal').style.display = 'none';
+    }
+};
+
+document.getElementById('confirmOrderBtn').addEventListener('click', function() {
+    const orderDate = document.getElementById('orderDate').value;
+    const orderTime = document.getElementById('orderTime').value;
+    if (!orderDate || !orderTime) {
+        alert('Please select both date and time.');
+        return;
+    }
+
+    const localDateTime = `${orderDate}T${orderTime}:00`;
     const order = {
         chatId: tg.initDataUnsafe.user.id,
         productsId: Array.from(cart.entries()).map(([productId, quantity]) => {
@@ -129,7 +154,7 @@ tg.MainButton.onClick(function() {
             obj[productId] = quantity;
             return obj;
         }),
-        localDateTime: new Date().toISOString()
+        localDateTime: localDateTime
     };
 
     fetch('http://localhost:8080/api/addOrder', {
@@ -150,6 +175,7 @@ tg.MainButton.onClick(function() {
         cart.clear();
         updateMainButton();
         loadProducts();
+        document.getElementById('dateTimeModal').style.display = 'none';
     })
     .catch(error => console.error('Error submitting order:', error));
 });
