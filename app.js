@@ -187,9 +187,27 @@ document.getElementById('submitOrderBtn').addEventListener('click', function() {
         loadProducts();
         document.getElementById('dateTimeModal').style.display = 'none';
         tg.MainButton.setText('Next');
+        showMessage('Order submitted successfully!', 'success');
     })
-    .catch(error => console.error('Error submitting order:', error));
+    .catch(error => {
+        console.error('Error submitting order:', error);
+        showMessage('Error submitting order. Please try again.', 'error');
+    });
 });
+
+function showMessage(message, type) {
+    const messageContainer = document.getElementById('messageContainer');
+    const messageElement = document.getElementById('message');
+
+    messageElement.innerText = message;
+    messageContainer.classList.remove('success', 'error');
+    messageContainer.classList.add(type);
+    messageContainer.style.display = 'block';
+
+    setTimeout(() => {
+        messageContainer.style.display = 'none';
+    }, 3000);
+}
 
 document.addEventListener('DOMContentLoaded', loadProducts);
 
