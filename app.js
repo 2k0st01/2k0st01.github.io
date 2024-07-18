@@ -114,7 +114,7 @@ function updateDisplay(productId) {
 
 function updateMainButton() {
     if (cart.size > 0) {
-        tg.MainButton.setText('Submit Order');
+        tg.MainButton.setText('Next');
         tg.MainButton.show();
     } else {
         tg.MainButton.hide();
@@ -124,25 +124,35 @@ function updateMainButton() {
 tg.MainButton.onClick(function() {
     // Show the date and time selection modal
     document.getElementById('dateTimeModal').style.display = 'block';
+    tg.MainButton.setText('Submit Order');
 });
 
 // Close the modal when the user clicks on <span> (x)
 document.querySelector('.close').onclick = function() {
     document.getElementById('dateTimeModal').style.display = 'none';
+    tg.MainButton.setText('Next');
 };
 
 // Close the modal when the user clicks anywhere outside of the modal
 window.onclick = function(event) {
     if (event.target == document.getElementById('dateTimeModal')) {
         document.getElementById('dateTimeModal').style.display = 'none';
+        tg.MainButton.setText('Next');
     }
 };
 
-document.getElementById('confirmOrderBtn').addEventListener('click', function() {
+document.getElementById('submitOrderBtn').addEventListener('click', function() {
     const orderDate = document.getElementById('orderDate').value;
     const orderTime = document.getElementById('orderTime').value;
     if (!orderDate || !orderTime) {
         alert('Please select both date and time.');
+        return;
+    }
+
+    const now = new Date();
+    const selectedDateTime = new Date(`${orderDate}T${orderTime}:00`);
+    if (selectedDateTime < now) {
+        alert('Please select a future date and time.');
         return;
     }
 
@@ -176,6 +186,7 @@ document.getElementById('confirmOrderBtn').addEventListener('click', function() 
         updateMainButton();
         loadProducts();
         document.getElementById('dateTimeModal').style.display = 'none';
+        tg.MainButton.setText('Next');
     })
     .catch(error => console.error('Error submitting order:', error));
 });
