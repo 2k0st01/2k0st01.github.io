@@ -122,14 +122,30 @@ function updateMainButton() {
 }
 
 tg.MainButton.onClick(function() {
-    // Show the date and time selection modal
-    document.getElementById('dateTimeModal').style.display = 'block';
-    tg.MainButton.setText('Submit Order');
+    if (tg.MainButton.textContent === 'Next') {
+        // Show the date and time selection modal
+        document.getElementById('dateTimeModal').style.display = 'block';
+        tg.MainButton.setText('Submit Order');
+    } else if (tg.MainButton.textContent === 'Submit Order') {
+        submitOrder();
+    }
 });
 
 // Close the modal when the user clicks on <span> (x)
 document.querySelector('.close').onclick = function() {
     document.getElementById('dateTimeModal').style.display = 'none';
+    tg.MainButton.setText('Next');
+};
+
+// Close the confirmation modal when the user clicks on <span> (x)
+document.querySelector('.close-confirmation').onclick = function() {
+    document.getElementById('confirmationModal').style.display = 'none';
+    tg.MainButton.setText('Next');
+};
+
+// Close the confirmation modal when the user clicks the close button
+document.getElementById('closeConfirmationBtn').onclick = function() {
+    document.getElementById('confirmationModal').style.display = 'none';
     tg.MainButton.setText('Next');
 };
 
@@ -141,7 +157,7 @@ window.onclick = function(event) {
     }
 };
 
-document.getElementById('submitOrderBtn').addEventListener('click', function() {
+function submitOrder() {
     const orderDate = document.getElementById('orderDate').value;
     const orderTime = document.getElementById('orderTime').value;
     if (!orderDate || !orderTime) {
@@ -186,10 +202,13 @@ document.getElementById('submitOrderBtn').addEventListener('click', function() {
         updateMainButton();
         loadProducts();
         document.getElementById('dateTimeModal').style.display = 'none';
-        tg.MainButton.setText('Next');
+        document.getElementById('confirmationModal').style.display = 'block';
     })
-    .catch(error => console.error('Error submitting order:', error));
-});
+    .catch(error => {
+        console.error('Error submitting order:', error);
+        alert('There was an error submitting your order. Please try again.');
+    });
+}
 
 document.addEventListener('DOMContentLoaded', loadProducts);
 
