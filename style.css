@@ -11,7 +11,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin: 0 auto; 
+    margin: 0 auto; /* Центрування контейнера */
 }
 
 .img {
@@ -68,6 +68,9 @@ body {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
@@ -75,9 +78,9 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 600px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Збільшуємо максимальну ширину */
+    border-radius: 15px; /* Заокруглюємо кути */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Додаємо тінь */
     color: var(--tg-theme-text-color);
 }
 
