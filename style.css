@@ -73,11 +73,12 @@ body {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: var(--tg-theme-bg-color);
     margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    color: var(--tg-theme-text-color);
 }
 
 .close {
