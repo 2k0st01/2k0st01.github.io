@@ -11,7 +11,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin: 0 auto; /* Центрування контейнера */
+    margin: 0 auto; 
 }
 
 .img {
@@ -78,9 +78,9 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 600px; /* Збільшуємо максимальну ширину */
-    border-radius: 15px; /* Заокруглюємо кути */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Додаємо тінь */
+    max-width: 600px; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: var(--tg-theme-text-color);
 }
 
