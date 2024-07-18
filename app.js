@@ -132,39 +132,33 @@ tg.MainButton.onClick(function() {
 });
 
 // Close the date and time modal when the user clicks on <span> (x)
-const closeButton = document.querySelector('.close');
-if (closeButton) {
-    closeButton.onclick = function() {
-        document.getElementById('dateTimeModal').style.display = 'none';
-        tg.MainButton.setText('Next');
-    };
-}
+document.querySelector('.close').onclick = function() {
+    document.getElementById('dateTimeModal').style.display = 'none';
+    tg.MainButton.setText('Next');
+};
 
 // Close the confirmation modal when the user clicks on <span> (x)
-const closeConfirmationButton = document.querySelector('.close-confirmation');
-if (closeConfirmationButton) {
-    closeConfirmationButton.onclick = function() {
-        document.getElementById('confirmationModal').style.display = 'none';
-        tg.MainButton.setText('Next');
-    };
-}
+document.querySelector('.close-confirmation').onclick = function() {
+    document.getElementById('confirmationModal').style.display = 'none';
+    tg.MainButton.setText('Next');
+};
 
 // Close the confirmation modal when the user clicks the close button
-const closeConfirmationBtn = document.getElementById('closeConfirmationBtn');
-if (closeConfirmationBtn) {
-    closeConfirmationBtn.onclick = function() {
-        document.getElementById('confirmationModal').style.display = 'none';
-        tg.MainButton.setText('Next');
-    };
-}
+document.getElementById('closeConfirmationBtn').onclick = function() {
+    document.getElementById('confirmationModal').style.display = 'none';
+    tg.MainButton.setText('Next');
+};
 
 // Close the modal when the user clicks anywhere outside of the modal
 window.onclick = function(event) {
-    const dateTimeModal = document.getElementById('dateTimeModal');
-    if (event.target == dateTimeModal) {
-        dateTimeModal.style.display = 'none';
+    if (event.target == document.getElementById('dateTimeModal')) {
+        document.getElementById('dateTimeModal').style.display = 'none';
         tg.MainButton.setText('Next');
     }
+};
+
+document.getElementById('confirmOrderBtn').onclick = function() {
+    submitOrder();
 };
 
 function submitOrder() {
@@ -222,9 +216,9 @@ function submitOrder() {
 
 document.addEventListener('DOMContentLoaded', loadProducts);
 
-const usercard = document.getElementById('usercard');
+let usercard = document.getElementById('usercard');
 if (usercard) {
-    const p = document.createElement('p');
+    let p = document.createElement('p');
     p.innerText = `${tg.initDataUnsafe.user.first_name} ${tg.initDataUnsafe.user.last_name}`;
     usercard.appendChild(p);
 }
