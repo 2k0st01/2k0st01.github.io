@@ -173,22 +173,24 @@ document.getElementById('submitOrderBtn').addEventListener('click', function() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(order)
-    })
+    });
+        
     // .then(response => {
     //     if (!response.ok) {
     //         throw new Error('Network response was not ok');
     //     }
     //     return response.json();
     // })
-    .then(data => {
-        console.log('Order submitted:', data);
-        cart.clear();
-        updateMainButton();
-        loadProducts();
-        document.getElementById('dateTimeModal').style.display = 'none';
-        tg.MainButton.setText('Next');
-        showMessage('Order submitted successfully!', 'success');
-    });
+    // .then(data => {
+    //     console.log('Order submitted:', data);
+    //     cart.clear();
+    //     updateMainButton();
+    //     loadProducts();
+    //     document.getElementById('dateTimeModal').style.display = 'none';
+    //     tg.MainButton.setText('Next');
+        
+    // });
+    showMessage('Order submitted successfully!', 'success');
     // .catch(error => {
     //     console.error('Error submitting order:', error);
     //     showMessage('Error submitting order. Please try again.', 'error');
