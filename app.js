@@ -131,7 +131,7 @@ tg.MainButton.onClick(function() {
     }
 });
 
-// Close the modal when the user clicks on <span> (x)
+// Close the date and time modal when the user clicks on <span> (x)
 document.querySelector('.close').onclick = function() {
     document.getElementById('dateTimeModal').style.display = 'none';
     tg.MainButton.setText('Next');
