@@ -8,7 +8,7 @@ let products = [];
 let cart = new Map();
 
 function loadProducts() {
-    fetch('/api/products') 
+    fetch('http://localhost:8080/api/products') 
         .then(response => response.json())
         .then(data => {
             products = data;
